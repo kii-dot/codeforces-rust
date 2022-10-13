@@ -1,24 +1,18 @@
 fn run() {
     input! {
-        t: usize,
-        ask: [(usize, usize, bytes); t],
+        ask: [(usize, usize, usize); 3],
     }
-    for (n, k, s) in ask {
-        let mut cnt = [0; 26];
-        for c in s {
-            cnt[(c - b'a') as usize] += 1;
+    for (one, two, three) in ask {
+        let mut hs: HashSet<usize> = HashSet::new();
+        hs.insert(one);
+        hs.insert(two);
+        hs.insert(three);
+
+        if hs.contains(&(one + two)) || hs.contains(&(one + three)) || hs.contains(&(two + three)) {
+            println!("YES");
+        } else {
+            println!("NO");
         }
-        let mut ans = String::new();
-        let q = n / k;
-        for _ in 0..k {
-            let mut x = 0;
-            while x < q && cnt[x] > 0 {
-                cnt[x] -= 1;
-                x += 1;
-            }
-            ans.push((b'a' + x as u8) as char);
-        }
-        println!("{}", ans);
     }
 }
 
